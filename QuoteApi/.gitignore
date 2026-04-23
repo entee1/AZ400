@@ -1,0 +1,5 @@
+# Build outputs
+bin/
+obj/
+
+# App settings local overrides (contains secrets)
