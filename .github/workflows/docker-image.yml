@@ -9,7 +9,7 @@ on:
 env:
   IMAGE_NAME: quote-api
   RESOURCE_GROUP: BigNT
-  CONTAINER_APP_NAME: quote-api
+  CONTAINER_APP_NAME: quote-pub
 
 jobs:
   build:
