@@ -8,8 +8,8 @@ on:
 
 env:
   IMAGE_NAME: quote-api
-  RESOURCE_GROUP: your-resource-group
-  CONTAINER_APP_NAME: quote-api-app
+  RESOURCE_GROUP: BigNT
+  CONTAINER_APP_NAME: quote-api
 
 jobs:
   build:
