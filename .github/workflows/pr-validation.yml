@@ -1,0 +1,24 @@
+name: PR Validation - Docker Build
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  IMAGE_NAME: quote-api
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image (no push)
+        run: docker build QuoteApi --file QuoteApi/Dockerfile --tag quote-api:pr-validation
+
+      - name: Validate build success
+        run: echo "PR validation successful"
