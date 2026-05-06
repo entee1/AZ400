@@ -4,7 +4,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton(_ =>
     new ServiceBusPublisher(
-        builder.Configuration["ServiceBus:ConnectionString"]!
+        builder.Configuration.GetConnectionString("ServiceBus")
+        ?? builder.Configuration["ServiceBus:ConnectionString"]
+        ?? builder.Configuration["ServiceBusConnectionString"]!
     ));
 
 var app = builder.Build();
