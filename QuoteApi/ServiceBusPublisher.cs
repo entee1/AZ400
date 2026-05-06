@@ -13,18 +13,26 @@
             _client = new ServiceBusClient(connectionString);
         }
 
-        public async Task PublishQuoteAsync(QuoteDto quote)
+public async Task PublishQuoteAsync(QuoteDto quote)
+{
+    try
+    {
+        var sender = _client.CreateSender(_topicName);
+
+        var messageBody = JsonSerializer.Serialize(quote);
+
+        var message = new ServiceBusMessage(messageBody)
         {
-            var sender = _client.CreateSender(_topicName);
+            Subject = "QuoteCreated"
+        };
 
-            var messageBody = JsonSerializer.Serialize(quote);
-
-            var message = new ServiceBusMessage(messageBody)
-            {
-                Subject = "QuoteCreated"
-            };
-
-            await sender.SendMessageAsync(message);
-        }
+        await sender.SendMessageAsync(message);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"ERROR sending message: {ex.GetType().Name}: {ex.Message}");
+        throw;
+    }
+}
     }
 }
