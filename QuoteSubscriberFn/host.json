@@ -1,0 +1,18 @@
+{
+  "logging": {
+    "logLevel": {
+      "default": "Error",
+      "Host.Results": "Error",
+      "Function": "Error",
+      "Host.Aggregator": "Error"
+    },
+    "applicationInsights": {
+      "enableDependencyTracking": false,
+      "enableRequestTracking": false,
+      "samplingSettings": {
+        "isEnabled": true,
+        "maxTelemetryItemsPerSecond": 5
+      }
+    }
+  }
+}
