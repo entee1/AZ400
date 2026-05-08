@@ -1,6 +1,5 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Extensions.ServiceBus;
 using Microsoft.Extensions.Logging;
 using QuoteSubscriberFn;
 
@@ -21,11 +20,19 @@ public class QuoteSubscriber
             Connection = "ServiceBusConnection")]
         string message)
     {
-        var quote = JsonSerializer.Deserialize<QuoteDto>(message);
+        try
+        {
+            var quote = JsonSerializer.Deserialize<QuoteDto>(message);
 
-        _logger.LogInformation("📩 Received Quote:");
-        _logger.LogInformation($"Email: {quote?.Email}");
-        _logger.LogInformation($"Property: {quote?.PropertyValue}");
-        _logger.LogInformation($"YearBuilt: {quote?.YearBuilt}");
+            _logger.LogInformation("📩 Received Quote:");
+            _logger.LogInformation($"Email: {quote?.Email}");
+            _logger.LogInformation($"Property: {quote?.PropertyValue}");
+            _logger.LogInformation($"YearBuilt: {quote?.YearBuilt}");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to process message. Body: {Body}", message);
+            throw;
+        }
     }
 }
