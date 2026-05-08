@@ -13,12 +13,11 @@ public class QuoteSubscriber
     }
 
     [Function("QuoteSubscriber")]
-    public void Run(
-        [ServiceBusTrigger(
-            "quotes-topic",
-            "logging-subscription",
-            Connection = "ServiceBusConnection")]
-        string message)
+    public async Task Run(
+      [ServiceBusTrigger(
+        "quotes-topic",
+        Connection = "ServiceBusConnection")]
+    string message)
     {
         try
         {
@@ -34,5 +33,7 @@ public class QuoteSubscriber
             _logger.LogError(ex, "Failed to process message. Body: {Body}", message);
             throw;
         }
+
+        await Task.CompletedTask;
     }
 }
